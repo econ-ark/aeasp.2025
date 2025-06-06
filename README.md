@@ -7,20 +7,17 @@
 ## Contents
 
 - [Overview](#overview)
-- [Useful Resources](#Useful-Resources)
-- [Instructor—Chris Carroll](#instructorchris-carroll)
-  - [Office Hours](#office-hours)
-- [Instructor—Matt White](#instructormatt-white)
-  - [Office Hours](#office-hours-1)
-- [Instructor—Alan Lujan](#instructoralan-lujan)
-  - [Office Hours](#office-hours-2)
+- [Useful Resources](#useful-resources)
+- [Instructor—Chris Carroll](#instructor-chris-carroll)
+- [Instructor—Matt White](#instructor-matt-white)
+- [Instructor—Alan Lujan](#instructor-alan-lujan)
 - [Course Materials](#course-materials)
 - [Course Description](#course-description)
 - [Course Requirements](#course-requirements)
 - [Schedule](#schedule)
 - [Grading](#grading)
 - [Policies](#policies)
-  - [Extensions & Late Work](#extensions-&-late-work)
+  - [Extensions & Late Work](#extensions-late-work)
   - [Absences](#absences)
   - [Accommodations](#accommodations)
   - [Mental Health](#mental-health)
@@ -30,13 +27,14 @@
 
 ---
 
+(overview)=
 ## Overview
 
 This is an in-person course, held on the Howard University Campus:
 
 | -            | -                                                                                                     |
 | :----------- | ----------------------------------------------------------------------------------------------------- |
-| Title        | [ECOG 315/ECON 181 "Advanced Research Methods and Statistical Programming"](#)                         |
+| Title        | ECOG 315/ECON 181 "Advanced Research Methods and Statistical Programming"                         |
 | Hours        | Fridays 1:00pm-3:30pm (plus weekly 1-hr mentor meeting and asynchronous videos)                        |
 | Dates        | May 30, 2025 ~ July 18, 2025 (See [below](#schedule) for schedule.)                                   |
 | Location     | TBD                                                                                                   |
@@ -48,14 +46,16 @@ This course will be conducted by your instructors:
 - Instructor: Matt White <mnwhite@gmail.com>
 - Instructor: Alan Lujan <alujan@jhu.edu>
 
+(useful-resources)=
 ## Useful Resources
 
 - Duke Writing in Economics: Economics Research Paper Writing Guide: [Here](https://twp.duke.edu/sites/twp.duke.edu/files/file-attachments/econ.original.pdf)
 - Github Cheat Sheet: [Here](https://education.github.com/git-cheat-sheet-education.pdf)
 
+(instructor-chris-carroll)=
 ## Instructor—Chris Carroll
 
-![Chris Carroll](media/chris-carroll.jpg?raw=true)
+![Chris Carroll](media/chris-carroll.jpg)
 
 ### Contact
 
@@ -72,9 +72,10 @@ Office hours TBD.
 > I am a professor of economics at Johns Hopkins University and co-chair of the National Bureau of Economic Research's working group on the Aggregate Implications of Microeconomic Consumption Behavior. Originally from Knoxville, Tennessee, I received my A.B. in Economics from Harvard University in 1986 and a Ph.D. from the Massachusetts Institute of Technology in 1990. After graduating from M.I.T., I worked at the Federal Reserve Board in Washington DC, where I prepared forecasts for consumer expenditure. I moved to Johns Hopkins University in 1995 and also spent 1997-98 working at the Council of Economic Advisors in Washington, where I analyzed Social Security reform proposals, tax and
 pension policy, and bankruptcy reform. Aside from my current work at Hopkins and the NBER, I am also an associate editor at the Review of Economics and Statistics (ReStat), the Journal of Business and Economic Statistics (JBES), and the Berkeley Electronic Journal of Macroeconomics (BEJM).
 
+(instructor-matt-white)=
 ## Instructor—Matt White
 
-![Matt White](media/matt-white.png?raw=true)
+![Matt White](media/matt-white.png)
 
 ### Contact
 
@@ -89,9 +90,10 @@ Please contact me by email to schedule a meeting on Zoom-- Matt is very availabl
 
 > I am an economist at Econ-ARK, a non-profit developer of open source computing tools for structural economic research. After growing up in New Hampshire, I did my undergraduate studies at Cornell University, and then pursued graduate study in economics at Johns Hopkins University. After receiving my PhD, I was an Assistant Professor of Economics at the University of Delaware from 2013 to 2023, and held a Visiting Scholar position at the Consumer Financial Protection Bureau in 2015-16. My research spans heterogeneous agents macroeconomics and health economics, with projects examining the distributional impact of health insurance reform policies. I also develop new methods for solving dynamic stochastic optimization problems, and for efficiently representing them numerically. This work includes being the original designer and programmer for HARK, the Heterogeneous Agents Resources and toolKit.
 
+(instructor-alan-lujan)=
 ## Instructor—Alan Lujan
 
-![Alan Lujan](media/alan-lujan.jpg?raw=true)
+![Alan Lujan](media/alan-lujan.jpg)
 
 ### Contact
 
@@ -109,10 +111,12 @@ Office hours TBD.
 
 > At Johns Hopkins University, Alan Lujan is a Program Coordinator and lecturer for the MS in Applied Economics program. He is a computational economist specializing in quantitative macroeconomics and structural econometrics, with particular interests in household finance and inequality. Lujan received his PhD in Economics from The Ohio State University in 2023 and subsequently joined the JHU Department of Economics as a Visiting Assistant Research Professor before his current role. His research integrates economic theory and computational techniques to better understand household financial behavior and its implications for inequality.
 
+(course-materials)=
 ## Course Materials
 
 Course materials will be posted to the Canvas site for the course as well as to [this GitHub repository](https://github.com/econ-ark/aeasp.2025). You should receive email notifications about Canvas uploads, and subscribing to 
 
+(course-description)=
 ## Course Description
 
 This course combines two essential components for modern economic research: advanced research methods and statistical programming, applied towards the completion of a substantive term paper.
@@ -125,10 +129,12 @@ Throughout the semester, each student (or student pair) will develop a research 
 
 **Mandatory Mentoring:** In addition to class time, each student is required to schedule and attend a **one-hour meeting each week** with an assigned economist mentor to discuss their term paper progress. It is the student's responsibility to arrange this meeting at a mutually convenient time during the week.
 
+(course-requirements)=
 ## Course Requirements
 
 Recommended Course Background: some familiarity with Python or other modern programming languages (though having taken a formal course in such a language is not required).
 
+(schedule)=
 ## Schedule
 
 _Note: Class times/days vary. Please check carefully._
@@ -157,6 +163,7 @@ Note that the schedule above may shift as we progress through the course. Update
 
 **This is a live document. Please refresh this page periodically to check for updates.**
 
+(grading)=
 ## Grading
 
 Your grade in this course will consist of four components:
@@ -173,12 +180,14 @@ The last component ("course participation") will be assessed by your instructor 
 - regular check-ins & incremental deliverables (as directed by your instructor)
 - **Completion of required weekly 1-hour mentor meetings**
 
+(policies)=
 ## Policies
 
 The below is a non-exclusive list of policies governing course procedure.
 
 If you have any questions or concerns, it is your responsibility to promptly bring them to the attention of the course instructor.
 
+(extensions-late-work)=
 ### Extensions & Late Work
 
 Due dates for assignments will be communicated to you in advances by your course instructor. If you have questions or confusion about
@@ -190,6 +199,7 @@ If you need an extension for an assignment, communicate this (in advance) to you
 
 **Late assignments will be docked a grade for each day that they are late: an A will become an A-; an A- will become a B.**
 
+(absences)=
 ### Absences
 
 We expect attendance at all in-person sessions of this course.
@@ -212,6 +222,7 @@ If you have any questions about this or any other policy, please contact your in
 
 Having emphasized the importance of in-person participation, we recognize that it may occassionally happen that a student has COVID or other very extenuating circumstances (based on instructor approval) that prevent them from attending in-person. For these cases, this is our class's Zoom link (which will be the same for every class): [Zoom Meeting](https://zoom.us/j/94375507370)
 
+(accommodations)=
 ### Accommodations
 
 We strive to create a welcoming, effective, and productive learning environment for all students.
@@ -222,10 +233,12 @@ The American with Disabilities (ADA) Procedures: Howard University is committed 
 
 If you have any questions about this or any other policy, please contact your instructor.
 
+(mental-health)=
 ### Mental Health
 
 Howard University provides resources to support student wellness. These include resources for anxiety, stress, depression, and other mental health related concerns via the University Counseling Service (202-806-7540). For confidential support related to interpersonal violence, contact the Interpersonal Violence Prevention Program (202-836-1401).
 
+(technology)=
 ### Technology
 
 Unlike many other courses you may have taken, this course strongly encourages the use of technology tools, including AI-based writing assistants such as ChatGPT.
@@ -240,6 +253,7 @@ Please confer with your instructor if you have questions or are unsure about the
 
 If you do not have access to a laptop computer, please contact your instructor for additional guidance.
 
+(communications)=
 ### Communications
 
 Course information and announcements will primarily be communicated via Howard University's Canvas and your HU email. Please check Canvas and your email frequently.
@@ -252,6 +266,7 @@ In addition to Canvas/email, we will use Github for assignment submission and di
 
 If you need to contact your instructor about assignments, absences, or grade-related matters, please e-mail us well in advance.
 
+(academic-ethics)=
 ### Academic Ethics
 
 All graded work must be completed in accordance with Howard University's Academic Code of Student Conduct. In particular, plagiarism in any form is a violation of this code. Examples of plagiarism include, but are not limited to:

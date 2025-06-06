@@ -1,0 +1,430 @@
+% !TeX spellcheck = en_GB
+       \documentclass[aspectratio=169]{beamer}
+%	\usetheme{warsaw}
+            \usepackage{setspace}
+            \usepackage{graphicx} %draft option suppresses graphics dvi display
+            \newcommand{\Prob}{\operatorname{Prob}}
+            \clubpenalty 5000
+            \widowpenalty 5000
+            \renewcommand{\baselinestretch}{1.23}
+            \usepackage{amsmath}
+            \usepackage{amsthm}
+            \usepackage{amsfonts}
+            \usepackage{amssymb}
+            \usepackage{bbm}
+            \usepackage{cancel}
+            \usepackage{soul}
+	 \newcommand{\E}{\mathbb{E}}
+	 \newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+	\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+	\newcommand{\Die}{\mathsf{D}}
+	\newcommand{\Live}{\cancel{\Die}}
+
+\author{Matthew N. White}
+
+\title[add]{ECOG 315 / ECON 181, Summer 2025 \\ Advanced Research Methods and Statistical Programming \\ Week 2 Lecture Slides}
+
+\institute[HU]{Howard University}
+
+\date{June 6, 2025}
+
+\begin{document}
+
+% ========== Title slide =================
+\begin{frame}
+\maketitle
+\end{frame}
+
+% =========== Administrivia ==============
+
+\begin{frame}
+\frametitle{Week 2 Administrivia}
+	
+\begin{itemize}
+\item If you did not successfully issue a PR for your survey, please do that
+\begin{itemize}
+	\item Luke
+		
+	\item Clinton
+		
+	\item Phillippe?
+		
+	\item Alejandra
+\end{itemize}
+
+\item If you aren't on Discord, please accept invite
+
+\item If you are on Discord, please keep tabs on it; only means of reaching you
+\end{itemize}
+	
+\end{frame}
+
+% ======== Spyder and other IDEs =========
+
+\begin{frame}
+\frametitle{Actually Working with Python: Spyder}
+\begin{itemize}
+	\item You \textbf{can} write and edit Python code in any text editor
+	
+	\item And then run Python code from a command line with \texttt{python}
+	
+	\item <2->Using an \textbf{interactive development environment} (IDE) just make things nicer
+	
+	\item <2->Open up Spyder (e.g. from Windows start menu)
+	
+	\item <3->There are a lot of panes; I close all of them except console and editor
+	
+	\item <3->Can open them later from View menu, Panes option
+	
+	\item <4->Console pane: live Python environment, can run code commands one by one
+	
+	\item <4->Editor pane: file editor; write scripts / programs, run with green arrow in toolbar
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{How to Learn Python (Outside of Class)}
+\begin{itemize}
+\item We will give you hands-on instruction with Python, don't worry
+
+\item If you want to learn on your own, I recommend Kevin Sheppard's notes
+
+\item There's a copy in \texttt{/materials/setup/KevinSheppardPython.pdf}
+
+\item It's from four years ago; current Python versions are 3.10 to 3.13
+
+\item <2->Recommended reading order: Ch 1, 2, 4, 9, 10, 12, 18, 3, 6, 7, 5, 11, 15, 29
+
+\item <2->Data operations: Ch 8, 16, 14, 17, 23
+
+\item <2->More math stuff: Ch 19, 20, 21, 22
+
+\item <2->General coding: Ch 13, 24, 25, 26, 28
+\end{itemize}
+\end{frame}
+
+% ======== Crash course in Python =========
+
+\begin{frame}
+\frametitle{Crash Course in Brain Surgery}
+
+\begin{itemize}
+	\item The only way to learn to program in any language is to do it
+	
+	\item Don't just read things: jump in and experiment with code
+	
+	\item <2->Don't be afraid to make mistakes or encounter difficulty
+	
+	\item <2->I am intentionally ``throwing you into the deep end''
+	
+	\item <3->In repo: \texttt{/code/ProcessSurveys.py} is code example to get started
+	
+	\item <3->Will go over here, but I encourage you to play with and edit it
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Python Programming Mentality (1/2)}
+
+\begin{itemize}
+	\item Think of Python workspace as a nested series of boxes (or \textbf{scopes})
+	
+	\item Each function, variable etc lives in some box, referenced by name
+	
+	\item <2->You can make new boxes inside of existing boxes
+	
+	\item <2->Stuff in box A usually can't see into box B
+	
+	\item <3->If you refer to a name in a scope, Python looks for it in that box
+	
+	\item <3->If that fails, it looks for that name in the box that contains the box
+	
+	\item <4->And so on until it gets to the top-level scope-- there's no more ``up''!
+	
+	\item <4->If it can't find the name there, then Python will throw an error
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Python Programming Mentality (2/2)}
+
+\begin{itemize}
+	\item Top level scope is called \texttt{\_\_main\_\_}
+	
+	\item A new scope is created every time you run a function-- local ``box''
+	
+	\item Scopes are discarded when finished running code
+	
+	\item <2->Python has automatic memory allocation and garbage collection
+	
+	\item <2->Never need to declare memory space in advance
+	
+	\item <3->Memory freed automatically when there are no ``references'' to object
+	
+	\item <3->Can manually delete objects, but that's rarely needed
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Basic Data Structure: List}
+
+\begin{itemize}
+	\item Workhorse data structure in Python is a \texttt{list}
+	
+	\item Exactly what it means in English: ordered list with repetition allowed
+	
+	\item Denote with brackets and commas: \texttt{A = [0, 3, 2, -17, 1]}
+	
+	\item <2->\textbf{Anything} can go in a list, no matter what else is in the list
+	
+	\item <2->This is fine: \texttt{B = [3.14, itertools, "oh hi Mark", all\_of\_Hamlet]}
+	
+	\item <3->You can have a list as an element of a list: \texttt{C = [A, B]}
+	
+	\item <3->Addition on lists is concatenation: \texttt{D = A + B}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Accessing Items in a List}
+
+\begin{itemize}
+	\item You can access one item of a list by its index with brackets: \texttt{A[3]}
+	
+	\item Python uses zero-indexing: the first element of a list has index zero
+	
+	\item <2->You can look at \textbf{slices} of lists using colon notation: \texttt{A[1:4]}
+	
+	\item <2->Important! Index actually points \textit{between} elements
+	\begin{itemize}
+		\item <2->So \texttt{A[1:4]} says ``elements of A between index 1 and index 4''
+		
+		\item <2->Those are the second, third, and fourth elements in human terms
+	\end{itemize}
+
+	\item <3->Can take all elements after or before an index: \texttt{A[2:]} or \texttt{A[:3]}
+	
+	\item <3->Can index from \textit{end} of list with negative numbers
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Importing Stuff into a Workspace}
+\begin{itemize}
+	\item Python has a lot of stuff, but it's not ``all there'' by default
+	
+	\item When you start a Python kernel, only the basics are loaded in
+	
+	\item <2->Can bring in additional material with the \texttt{import} command
+	
+	\item <2-> rename things as you \texttt{import} them, often for lazy typing
+	
+	\item <3->Important: differentiate b/w installing package vs importing it
+	\begin{itemize}
+		\item <3->\textbf{Installed:} package exists on your computer in Python environment
+		
+		\item <3->\textbf{Imported:} stuff has been ``summoned'' into current workspace
+	\end{itemize}
+
+	\item <4->Can also import your own files from the same directory
+\end{itemize}
+\end{frame}
+
+% ========= Example Python file ==========
+
+\begin{frame}
+\frametitle{Example Python Code: Processing Student Surveys}
+\begin{itemize}
+	\item Best way to teach you is to walk you through example code
+	
+	\item Sync your fork with the course repo, and pull down from remote
+	
+	\item Open \texttt{/code/ProcessSurveys.py} in Spyder or other editor
+	
+	\item <2->Has functions to read in my survey, and all of yours
+	
+	\item <2->And then to produce histograms of responses
+	
+	\item <3->Written to show you a bunch of commonly useful things
+\end{itemize}
+\end{frame}
+
+
+% ======== Jupyter notebooks =========
+
+\begin{frame}
+\frametitle{Introduction to Jupyter Notebooks}
+\begin{itemize}
+	\item Communicating scientific ideas is sometimes aided by reader interaction
+	
+	\item \textbf{Jupyter notebooks} provide a way to integrate text, math, and code
+	
+	\item <2->Sync your fork with the course repo, and pull down from remote
+	
+	\item <3->In Anaconda prompt, type \texttt{jupyter notebook}
+	
+	\item <3->Navigate to your fork on your computer, then go to \texttt{/code/}
+	
+	\item <3->Open \texttt{ExampleNotebook.ipynb}
+	
+	\item <4->Cells can be run individually with Shift+Enter
+\end{itemize}
+\end{frame}
+
+% ======== Anaconda environments =========
+
+\begin{frame}
+\frametitle{Anaconda and Virtual Environments}
+\begin{itemize}
+	\item There are a lot of Python packages, and you will have multiple projects
+	
+	\item Project A requires \texttt{CoolPackage} v0.8 or higher; Project B requires v0.7 or lower
+	
+	\item <2->Not a problem! \texttt{conda} can manage virtual Python environments
+	
+	\item <2->Can have multiple collections/configurations of packages on your computer
+	
+	\item <2->Manage each separately, switch between them with a single command
+	
+	\item <3->We probably won't use this much, but will install more packages
+	
+	\item <3->Open up Anaconda Prompt (from Windows start menu, e.g.); terminal will open
+\end{itemize}
+\end{frame}
+
+% ======== Installing HARK (example) =========
+
+\begin{frame}
+\frametitle{Installing New Packages}
+\begin{itemize}
+	\item Example: installing \texttt{HARK}, Econ-ARK's primary software package
+	
+	\item In Anaconda prompt, type \texttt{pip install econ-ark}, accept
+	
+	\item <2->\texttt{pip} is the most common \textbf{package manager}, draws on Python Package Index
+	
+	\item <2->\texttt{conda} is also a package manager, but \textbf{slightly} fussier
+	
+	\item <3->\texttt{HARK} is now available for use on your computer
+	
+	\item <3->But we won't be working with it yet
+\end{itemize}
+\end{frame}
+
+
+% ======== Giving a research pitch =========
+
+\begin{frame}
+\frametitle{Step One: Pitching a Research Project}
+
+\begin{itemize}
+	\item On \textbf{Tuesday, June 10, at 1:30pm}, you will practice your pitch
+	
+	\item On \textbf{Friday, June 13, at ????}, you will give your pitch to ???
+	
+	\item <2->There are 12 groups, and your pitch is 5-10 minutes; 150 minute time slot!
+	
+	\item <2->Tuesday: really rapid advice from Alan and me; written feedback later
+	
+	\item <2->Friday: substantive feedback \& questions from wider audience
+	
+	\item <3->If you want slides on Tues, you must submit them \textbf{as a PR by 1pm Tuesday}
+	
+	\item <3->Please put them in PDF form (export to PDF); I do not have PowerPoint
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Advice for Giving a Research Pitch}
+
+\begin{itemize}
+	\item You are excited about this idea, and it is interesting
+	
+	\item If you don't care, then no one else will care; you should care a lot
+	
+	\item <2->Speak loudly and clearly; take your time and enunciate your words
+	
+	\item <2->Counterbalance: you're on a tight schedule, so don't dawdle
+	
+	\item <3->Be mindful of what the audience knows and what they don't know
+	
+	\item <3->\textbf{Briefly} explain key concepts before going too far in
+	
+	\item <4->This is just a \textbf{pitch}, so you don't need to have all the answers
+	
+	\item <5->Slides are a memory tool and/or visual guide, not a script
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Structuring Your Research Pitch (1/3)}
+
+\begin{itemize}
+	\item Order of information is critical in all contexts
+	
+	\item First: what are you investigating, in 1-2 sentences?
+	
+	\item <2->No detail, no background, just tell them what the subject area is
+	
+	\item <2->Lets the audience get their mind in the right mode
+	
+	\item <3->\textbf{Then} provide appropriate background information
+	
+	\item <3->Specific policy change, important history, etc
+	
+	\item <4->Then state your research question \textbf{very specifically}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Structuring Your Research Pitch (2/3)}
+
+\begin{itemize}
+	\item After telling people what the question is, convince them it matters
+	
+	\item <2->Why do we want to know the answer? What would someone do if they knew?
+	
+	\item <2->How would human welfare improve if they took those actions?
+	
+	\item <3->You can skip this if it's glaringly obvious, like ``keep people alive''
+	
+	\item <4->\textbf{Briefly} tell them what we already know: prior research
+	
+	\item <4->This is \textbf{not} a literature review; just a summary / overview
+	
+	\item <5->What's your angle? Why is this new, as far as you know?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Structuring Your Research Pitch (3/3)}
+
+\begin{itemize}
+	\item Try to provide an outline of \textbf{how} you're going to answer your Q
+	
+	\item <2->What data do you \textbf{need}-- what is \textbf{required} to be in the dataset to do this?
+	
+	\item <2->Have you identified a dataset that will do this? Tell us about it!
+	
+	\item <2->Do you have some ideas for where to look? Only feasible if you can get the data!
+	
+	\item <3->\textbf{Briefly} explain your current thoughts on econometric method: what will you \textbf{do}?
+	
+	\item <3->At most \textbf{one or two} equations / econometric specifications
+	
+	\item <4->What are your current concerns about this strategy? Why might it not be valid?
+	
+	\item <4->Don't worry if you have none, the audience will tell you their concerns!
+\end{itemize}
+\end{frame}
+
+\end{document}

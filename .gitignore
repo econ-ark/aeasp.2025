@@ -172,3 +172,19 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# MyST build outputs
+_build
+
+# LaTeX stuff
+*.aux
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+# Various hidden files
+*.idea
+*.DS_Store
+*.vcs
