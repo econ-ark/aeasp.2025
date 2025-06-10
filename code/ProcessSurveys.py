@@ -1,15 +1,12 @@
-"""
-This file contains example functions and scripts as a demonstration of Python
-code for AEA Summer Program students.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+os.chdir('/Users/jesusplascencia/Desktop/aeasp.2025/code')
+
 survey_dir = "../submissions/FirstDaySurvey/" # directory relation to here
 figure_dir = "../media/"
 my_survey = "SurveyWhiteMN.txt"
-
 # Get all of the filenames for the surveys
 filenames = os.listdir(survey_dir)
 
