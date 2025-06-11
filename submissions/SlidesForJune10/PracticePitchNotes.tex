@@ -1,0 +1,282 @@
+
+       \documentclass[12pt,pdftex,letterpaper]{article}
+            \usepackage{setspace}
+            \usepackage[dvips,]{graphicx} %draft option suppresses graphics dvi display
+%            \usepackage{lscape}
+%            \usepackage{latexsym}
+%            \usepackage{endnotes}
+%            \usepackage{epsfig}
+            \usepackage{amsmath}
+%           \singlespace
+            \setlength{\textwidth}{6.5in}
+            \setlength{\textheight}{9in}
+            \addtolength{\topmargin}{-\topmargin} 
+            \setlength{\oddsidemargin}{0in}
+            \setlength{\evensidemargin}{0in}
+            \addtolength{\headsep}{-\headsep}
+            \addtolength{\topskip}{-\topskip}
+            \addtolength{\headheight}{-\headheight}
+            \setcounter{secnumdepth}{2}
+%            \renewcommand{\thesection}{\arabic{section}}
+            % \renewcommand{\footnote}{\endnote}
+            \newtheorem{proposition}{Proposition}
+            \newtheorem{definition}{Definition}
+            \newtheorem{lemma}{lemma}
+            \newtheorem{corollary}{Corollary}
+            \newtheorem{assumption}{Assumption}
+            \newcommand{\Prob}{\operatorname{Prob}}
+            \clubpenalty 5000
+            \widowpenalty 5000
+            \renewcommand{\baselinestretch}{1.25}
+            \usepackage{amsmath}
+            \usepackage{amsthm}
+            \usepackage{amsfonts}
+            \usepackage{amssymb}
+            \usepackage{bbm}
+            \usepackage{hyperref}
+            \newcommand{\N}{\mathbb{N}}
+			\newcommand{\R}{\mathbb{R}}
+			\newcommand{\E}{\mathbb{E}}
+			\newcommand{\der}[2]{\frac{\text{d}#1}{\text{d}#2}}
+			\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+						
+\begin{document}
+
+\begin{center}
+	\textbf{Matt White's Notes About Student Practice Research Pitches --- June 10, 2025 }
+\end{center}
+
+Big picture: you all exceeded my expectations. In my opinion, each group has a clear idea and a path forward, and you all expressed it in an understandable way. Below please find bullet-point notes organized by team color. I encourage you to read all the comments, not just yours, and look at the slides that I'm referring to-- they're all on the course repo.
+
+Don't worry if my comments seem ``negative'' on the balance. I'm giving you feedback on what to tune up or adjust for Friday-- this is your coach saying, ``Elbow up, get your hips through,'' and not, ``You suck.'' You'll note that a lot of my comments are to cut something or add something. There's no doubt that getting it ``just right'' is a difficult balance.
+
+\vspace{0.5cm}
+
+\noindent \textbf{Yellow team:}
+\begin{itemize}
+	\item Include your (academic) affiliation on your title slide, if any
+	
+	\item Slide space not well used. See slide 2 for prime offender: massive whitespace, two big icons, tiny text; oh no!
+	
+	\item ``Why it matters \& prior work'' circle takes up half the slide
+	
+	\item CZU was never defined. It's Santa Cruz something, but I just don't know
+	
+	\item Go for simpler slide layout, and use all of the canvas; too much whitespace on sides
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Indigo team:}
+\begin{itemize}
+	\item Use a 16:9 aspect ratio in beamer; declaration is \texttt{\textbackslash documentclass[aspectratio=169]\{beamer\}}
+	
+	\item Look up beamer ``short title'' feature so your paper name doesn't spill over on bottom of every slide; it goes in the document metadata
+	
+	\item Include academic affiliation, if any
+	
+	\item Everyone should consider emulating the ``information density'' level on these slides
+	
+	\item Indonesia is not South Asian by any widely used definition. As far as I see, it's universally categorized as Southeast Asian. See Wiki \href{https://en.wikipedia.org/wiki/South\_Asia#Ambiguity}{here} and \href{https://en.wikipedia.org/wiki/Southeast_Asia}{here} for discussion.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Grey team:}
+\begin{itemize}
+	\item Ann's volume, tone, and pace were very good
+	
+	\item Adin spoke a bit quickly, but there were also mic problems during her talk; sound quality better on back half
+	
+	\item Include your academic affiliation, if any
+	
+	\item Great motivation slides, explaining the channel you're looking for
+	
+	\item Well-being is usually hyphenated, but wellbeing \textbf{technically} not wrong
+	
+	\item Specifying ITT on econometric slide is a pro move
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Green team:}
+\begin{itemize}
+	\item I had a note to self that Jada's voice was also very good; I missed Stevi's talk
+	
+	\item Getting all the logos on there was sweet; thank you for using spiderless UR logo
+	
+	\item Text on academic slides is almost always left-aligned
+	
+	\item Consider splitting first substantive slide into two; these are critical concepts for your idea, and it's a very busy slide
+	
+	\item Split literature slide too; this is too much IMO
+	
+	\item For everyone: ``next steps'' is \underline{least important} thing for the pitch. You've barely started, we all know there's a lot to be done!
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Teal team:}
+\begin{itemize}
+	\item Great simple bullet points on background slide
+	
+	\item Significance slide: circles too big, taking up 60\% of slide. Makes Gallup survey info hard to read. Should maybe be its own slide, as bullet points
+	
+	\item Need to specify Trump's cuts \underline{to what}. Dude's cut a lot of stuff.
+	
+	\item \textit{Maybe} trim the Gallup image to just the relevant items; stuff like ``presidency'' and ``Supreme Court'' are distracting because they're eye-catching gaps, but they represent a 2020 partisan effect proxied by race, and that's not what your idea is about.
+	
+	\item Double check notation on methodology slide. What are those commas doing there? Why is there is superscript of $,t$?
+	
+	\item I promised no econ feedback, but I'm impressed you know about synthetic controls.
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Purple team:}
+\begin{itemize}
+	\item Include academic affiliations on title slide, if any
+	
+	\item Put line break after ``Market:'' in title; spilling one word onto second line is ugly.
+	
+	\item And put a question mark at the end!
+	
+	\item I did not understand the motivation slide on either presentation. Please include text summary of what you're saying. All that's there is checkboxes on four racial groups, and then, ``Has this been studied before? Yes''.  The slide doesn't say what ``this'' is, w.r.t. those checkboxes!
+	
+	\item Methodology slide: Difference \textbf{in} Difference\textbf{s}, not \textbf{and}
+	
+	\item I missed why $\mu_i$ is TBD on both talks; I'm pretty sure it's utterly critical here.
+	
+	\item Get well soon, Grace!
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Maroon team:}
+\begin{itemize}
+	\item Include academic affiliations on title slide, if any
+	
+	\item Don't abbreviate QCEW in the title; I had no idea what your title meant until slide 6 of 11
+	
+	\item For everyone: don't have ``overview'' slide where you just say what the parts are
+	
+	\item Cut ``highly debated''; irrelevant / everyone knows / takes up space
+	
+	\item Use 2 letter abbreviations for states to save a line
+	
+	\item Split question and lit review slide into two separate slides
+	
+	\item Lit review is way too much. This needs to be cut down for the pitch.
+	
+	\item Data and model slides are more or less perfect, but need commas and/or more space b/w definitions
+	
+	\item Use \texttt{\textbackslash overline}, not \texttt{\textbackslash bar} for $W_{it}$
+	
+	\item Don't present results for the pitch. Honestly, I did not understand what the scale was, and explaining it properly takes more time than you have
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Mustard team:}
+\begin{itemize}
+	\item Jesus speaks a bit quickly; try to slow down a little. I missed Stanislav's talk.
+	
+	\item Very good timeline slide, but get the word ``automobile'' or ``automotive'' onto the text.
+	
+	\item Summarize the loophole and fix on a slide in words, for ``visual learners''; the details matter and this is an interesting story. Right to repair is still ``hot'' IMO.
+	
+	\item Jesus ended up dwelling a little too long on the timeline.
+	
+	\item Enlarge data image snippet on the Data slide, please
+	
+	\item What do the 1 and 1.1 mean in bottom right corner of Methodology slide?
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Red team:}
+\begin{itemize}
+	\item Cut the Contents slide and interstitial title slides (``Background''); they're a waste
+	
+	\item Careful with words like ``gross''; consider ``severe'' instead.
+	
+	\item Provide a brief textual definition of redlining on the ``classic map'' slide, for visual learners. It's a well known term, but some might not know it has a \textit{literal} origin.
+	
+	\item Segregation slides: why are there 2010 and 2020 images? I don't see meaningful differences over time. Hits harder if you just have Black vs White density side by side, for 2020 only.
+	
+	\item Seth dawdled a bit too long on the maps; need to keep it moving.
+	
+	\item Expand slightly on Sources of Data slide: one line summary of what you will get from each one. Census, BLS, and HUD have a \textbf{lot} of stuff, so ``visual learners'' don't get much from this slide.
+	
+	\item Eviction Lab is not universally known. It's worth briefly explaining if you have time.
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Aqua team:}
+\begin{itemize}
+	\item ACA was passed in 2010, not 2014; capitalize Essential Health Benefits.
+	
+	\item Name of HB1 is ``\textbf{One} Big Beautiful Bill Act''
+	
+	\item Framing: Don't want to make this about a bill that's currently under consideration by Congress. The Medicaid cuts are close to the least popular parts of the OBBBA, and Senate is substantially likely to remove or change. You don't want to do ``research'' about a policy that may or may not actually happen... and that might be obviated by July 18, when you do final presentation!
+	
+	\item You \textbf{can} make this about how ACA Medicaid expansion affected opioid-related outcomes-- what has \textbf{already} happened?
+	
+	\item Can tie the motivation to OBBBA if it's still relevant: We're looking at this now because Congress just undid it. The primary exercise is estimating effects of ACA Medicaid expansion on opioid-related outcomes; \textbf{secondary} to that, what do the results say about OBBBA?
+	
+	\item Define opioid use disorder before using abbreviation; you used SUD on prior slide.
+	
+	\item External hyperlinks on presentation slides don't do anything.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Blue team:}
+\begin{itemize}
+	\item Like two other students, I noted Salma as having a good voice
+	
+	\item Use a 16:9 aspect ratio in beamer; declaration is \texttt{\textbackslash documentclass[aspectratio=169]\{beamer\}}
+	
+	\item Everyone should also look at these slides for their ``informational density''. Look how clean and easy to read they are!
+	
+	\item Data slide: Break out risk behaviors and health behaviors onto separate bullets. As is, it says that going to the gym is a risk behavior. That's why I avoid the gym.
+	
+	\item This is the second group with synthetic controls, so now I need to adjust my priors about undergrad econometrics training.
+\end{itemize}
+
+
+\vspace{0.5cm}
+
+\noindent \textbf{Orange team:}
+\begin{itemize}
+	\item Anthony speaks very quickly, try to slow it down a little.
+	
+	\item Like for Adin, the mic audio went bad for about half of Ronald's talk; IDK why.
+	
+	\item Lit review slide: briefly list/describe MH programs / interventions that you're talking about; lets audience fix ideas about what this means.
+	
+	\item ``Early investments'' might not be the most accurate phrase; ``early'' usually means ``young age''. Maybe just call them ``interventions''.
+	
+	\item Be specific w/ ``fiscal savings and macroeconomic benefits'': cite a paper, specify/quantify a benefit (specific reduced downstream HC costs, higher labor force participation, etc)
+	
+	\item Need to mention data / dataset; how are you going to do this?
+	
+	\item Econometric slide: what is the unit of analysis? A state-year?
+	
+	\item Suicide rate almost surely has to be in logs
+	
+	\item Don't mention time constraints or ``research literacy''; everyone's in the same boat
+	
+	\item Drop the Recommendations slide. You haven't done the research project yet, can't possibly draw conclusions or make recommendations. Making recommendations \textit{before} doing analysis comes across as motivated or biased.
+	
+	\item Some of that content can be repurposed as motivation: investigating how to efficiently allocate Medicaid resources to maximize MH impact and generate savings elsewhere
+\end{itemize}
+
+
+\end{document}
