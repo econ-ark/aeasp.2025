@@ -1,0 +1,185 @@
+% !TeX spellcheck = en_GB
+       \documentclass[aspectratio=169]{beamer}
+%	\usetheme{warsaw}
+            \usepackage{setspace}
+            \usepackage{graphicx} %draft option suppresses graphics dvi display
+            \newcommand{\Prob}{\operatorname{Prob}}
+            \clubpenalty 5000
+            \widowpenalty 5000
+            \renewcommand{\baselinestretch}{1.23}
+            \usepackage{amsmath}
+            \usepackage{amsthm}
+            \usepackage{amsfonts}
+            \usepackage{amssymb}
+            \usepackage{bbm}
+            \usepackage{cancel}
+            \usepackage{soul}
+	 \newcommand{\E}{\mathbb{E}}
+	 \newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+	\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+	\newcommand{\Die}{\mathsf{D}}
+	\newcommand{\Live}{\cancel{\Die}}
+
+\author{Matthew N. White}
+
+\title[add]{ECOG 315 / ECON 181, Summer 2025 \\ Advanced Research Methods and Statistical Programming \\ Week 4 Lecture Slides}
+
+\institute[HU]{Howard University}
+
+\date{June 20, 2025}
+
+\begin{document}
+
+% ========== Title slide =================
+\begin{frame}
+\maketitle
+\end{frame}
+
+% =========== Administrivia ==============
+
+\begin{frame}
+\frametitle{Week 4 Administrivia}
+	
+\begin{itemize}
+\item If you did not successfully issue a PR for your survey, please do that
+\begin{itemize}
+	\item Ronald!
+\end{itemize}
+
+\item Email me if you need help with GitHub (etc)
+
+\item Did the revised example Python code work for Mac users?
+
+\item Alan and I were pretty impressed with your presentations
+\end{itemize}
+	
+\end{frame}
+
+% =========== Git and branches ===========
+
+\begin{frame}
+\frametitle{Workflow Management: Branches on GitHub (1/2)}
+\begin{itemize}
+	\item Quite often, there is \textbf{a lot} going on with a project
+	
+	\item Some things might not work out, but want to experiment with them
+	
+	\item And/or multiple people are working on the project
+	
+	\item <2->Can organize git workflow in \textbf{branches} of your repo
+	
+	\item <2->Split off a mini-copy of the project, make commits, maybe merge into \texttt{main}
+	
+	\item <3->Merging happens via pull request, just like when making a PR from your fork
+	
+	\item <3->Branches are cheap as free: if something doesn't work out, just toss it!
+	
+	\item <4->Mature project could have a lot of branches (and PRs!)
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Workflow Management: Branches on GitHub (2/2)}
+\begin{itemize}
+	\item On GitHub desktop, click the arrow on the ``Current branch'' button
+	
+	\item Will see a list of all branches; can click ``New branch'' and name it
+	
+	\item <2->Commits are specific \textbf{to a branch}
+	
+	\item <3->GitHub Desktop can ``stash'' one set of uncommitted changes
+	
+	\item <3->But best practice is to commit (or discard) changes before changing branches
+	
+	\item <4->Don't forget to push back to the origin after committing!
+	
+	\item <4->When issuing a PR, verify the branch you're merging and the target
+\end{itemize}
+
+\end{frame}
+
+% ======== Anaconda environments =========
+
+\begin{frame}
+\frametitle{Anaconda and Virtual Environments}
+\begin{itemize}
+	\item There are a lot of Python packages, and you will have multiple projects
+	
+	\item Project A requires \texttt{CoolPackage} v0.8 or higher; Project B requires v0.7 or lower
+	
+	\item <2->Not a problem! \texttt{conda} can manage virtual Python environments
+	
+	\item <2->Can have multiple collections/configurations of packages on your computer
+	
+	\item <2->Manage each separately, switch between them with a single command
+	
+	\item <3->We probably won't use this much, but will install more packages
+	
+	\item <3->Open up Anaconda Prompt (from Windows start menu, e.g.); terminal will open
+\end{itemize}
+\end{frame}
+
+% ======== Installing HARK (example) =========
+
+\begin{frame}
+\frametitle{Installing New Packages}
+\begin{itemize}
+\item Example: installing \texttt{HARK}, Econ-ARK's primary software package
+
+\item In Anaconda prompt, type \texttt{pip install econ-ark}, accept
+
+\item <2->\texttt{pip} is the most common \textbf{package manager}, draws on Python Package Index
+
+\item <2->\texttt{conda} is also a package manager, but \textbf{slightly} fussier
+
+\item <3->\texttt{HARK} is now available for use on your computer
+
+\item <3->But we won't be working with it yet
+\end{itemize}
+\end{frame}
+
+
+% ======== Jupyter notebooks =========
+
+\begin{frame}
+\frametitle{Introduction to Jupyter Notebooks}
+\begin{itemize}
+	\item Communicating scientific ideas is sometimes aided by reader interaction
+	
+	\item \textbf{Jupyter notebooks} provide a way to integrate text, math, and code
+	
+	\item <2->Sync your fork with the course repo, and pull down from remote
+	
+	\item <3->In Anaconda prompt, type \texttt{jupyter notebook}
+	
+	\item <3->Navigate to your fork on your computer, then go to \texttt{/code/}
+	
+	\item <3->Open \texttt{ExampleNotebook.ipynb}
+	
+	\item <4->Cells can be run individually with Shift+Enter
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What Should You Use Jupyter Notebooks For?}
+\begin{itemize}
+	\item Notebooks are very good at conveying \textbf{mixed information}
+	
+	\item E.g. want to explain a model \textbf{and} its computational representation
+	
+	\item <2->Or document a code feature and explain it with examples
+	
+	\item <2->Or have \textbf{interactive figures} to show model interactions (\texttt{ipywidgets})
+	
+	\item <3->Avoid: ``This notebook could have been a PDF''
+	
+	\item <4->sGood example: \texttt{TractableBufferStock-Interactive.ipynb}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
