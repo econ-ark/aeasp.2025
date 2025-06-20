@@ -1,22 +1,17 @@
-"""
-This file contains example functions and scripts as a demonstration of Python
-code for AEA Summer Program students.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+os.chdir('/Users/jesusplascencia/Desktop/aeasp.2025/code')
+
 survey_dir = "../submissions/FirstDaySurvey/" # directory relation to here
 figure_dir = "../media/"
 my_survey = "SurveyWhiteMN.txt"
-
-os.chdir(os.path.abspath(os.path.dirname(__file__)))
-
 # Get all of the filenames for the surveys
 filenames = os.listdir(survey_dir)
 
 # Open my survey and get the names of the things
-with open(survey_dir + my_survey, 'r', encoding='utf-8') as f:
+with open(survey_dir + my_survey, 'r') as f:
     my_text = f.read()
     f.close()
     
@@ -66,7 +61,7 @@ def get_numbers_from_survey_data(survey_lines):
 
 # Define a function that reproduces the steps above to make a list of survey data lines
 def get_survey_data_from_file(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r') as f:
         my_text = f.read()
         f.close()
     idx = my_text.find("THING : VALUE") + 15 # Where the data should start
@@ -167,6 +162,3 @@ make_and_save_fig = lambda x : make_histogram_for(x, names_of_things,
                                                   student_survey_data,
                                                   mnw_survey_data,
                                                   x.replace(" ","") + "Hist")
-
-# Actually make a histogram
-make_fig("Fortran")
