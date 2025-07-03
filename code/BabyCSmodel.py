@@ -7,10 +7,12 @@ It requires the HARK package to be installed in order to run.
 '''
 
 import numpy as np
-from HARK import AgentType, MetricObject
-from HARK.utilities import CRRAutility, CRRAutilityP, CRRAutilityP_inv, CRRAutility_inv,\
-                CRRAutility_invP, make_grid_exp_mult, plot_funcs, plot_funcs_der
-from HARK.distribution import MeanOneLogNormal, combine_indep_dstns
+from HARK import AgentType
+from HARK.metric import MetricObject
+from HARK.rewards import CRRAutility, CRRAutilityP, CRRAutilityP_inv, CRRAutility_inv,\
+                CRRAutility_invP
+from HARK.utilities import make_grid_exp_mult, plot_funcs, plot_funcs_der
+from HARK.distributions import MeanOneLogNormal, combine_indep_dstns
 from HARK.interpolation import LinearInterp, CubicInterp
 from scipy.optimize import fminbound, brentq
 import matplotlib.pyplot as plt
@@ -48,22 +50,6 @@ class BabyValueFunction(MetricObject):
     def derivative(self,M):
         return self.VnvrsFunc.derivative(M) * self.uP(self.VnvrsFunc(M))
         
-    
-class ToddlerConsumerSolution(MetricObject):
-    '''
-    A class for representing one period of the solution to a "toddler consumption-
-    saving" problem.
-    '''
-    distance_criteria = ['cFunc']
-    
-    def __init__(self,cFunc=None,vFunc=None,vPfunc=None):
-        if cFunc is not None:
-            setattr(self,'cFunc',cFunc)
-        if vFunc is not None:
-            setattr(self,'vFunc',vFunc)
-        if vPfunc is not None:
-            setattr(self,'vPfunc',vPfunc)
-            
             
 def solveBabyCSbyMaximization(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
     '''
@@ -94,9 +80,9 @@ def solveBabyCSbyMaximization(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateG
     '''
     # Unpack next period's solution and the income distribution, and define the utilty function
     Vfunc_next = solution_next.Vfunc
-    IncomeProbs = IncomeDstn.pmf
-    IncomeVals  = IncomeDstn.X
-    u = lambda C : CRRAutility(C,gam=CRRA)
+    IncomeProbs = IncomeDstn.pmv
+    IncomeVals  = IncomeDstn.atoms[0]
+    u = lambda C : CRRAutility(C, CRRA)
     
     EvalCount = 0
     
@@ -384,70 +370,6 @@ def solveBabyCSplusVfunc(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
     return solution_now
 
 
-def solveToddlerCSbyEndogenousGrid(solution_next,DiscFac,Rfree,PermGroFac,CRRA,IncomeDstn,StateGrid):
-    '''
-    Solves one period of the "toddler consumption-saving" model by using the endogenous
-    grid method to invert the first order condition, obviating any search.
-    
-    Parameters
-    ----------
-    solution_next : BabyConsumerSolution
-        The solution to the next period's problem; should have the attributes
-        VpFunc and Cfunc, representing the marginal value and consumption functions.
-    DiscFac : float
-        Intertemporal discount factor.
-    Rfree : float
-        Risk free interest rate on assets retained at the end of the period.
-    PermGroFac : float
-        Expected permanent income growth factor for next period.
-    CRRA : float
-        Coefficient of relative risk aversion.
-    IncomeDstn : [np.array]
-        Distribution of income received next period.  Has three elements, with the
-        first a list of probabilities, the second a list of permanent income
-        shocks, and the third a list of transitory income shocks.
-    StateGrid : np.array
-        Array of states at which the consumption-saving problem will be solved.
-        Represents values of A_t or end-of-period assets.
-        
-    Returns
-    -------
-    solution_now : BabyConsumerSolution
-        The solution to this period's problem.
-    '''
-    # Unpack next period's solution and the income distribution, and define the (inverse) marginal utilty function
-    vPfunc_next = solution_next.vPfunc
-    IncomeProbs = IncomeDstn.pmf
-    PermShkVals  = IncomeDstn.X[0]
-    TranShkVals  = IncomeDstn.X[1]
-    ShockCount  = IncomeProbs.size
-    uP = lambda C : CRRAutilityP(C,gam=CRRA)
-    uPinv = lambda C : CRRAutilityP_inv(C,gam=CRRA)
-
-    # Make tiled versions of the grid of a_t values and the components of the income distribution
-    aNowGrid = np.insert(StateGrid,0,0.0) # Add a point at a_t = 0.
-    StateCount = aNowGrid.size
-    aNowGrid_rep = np.tile(np.reshape(aNowGrid,(StateCount,1)),(1,ShockCount)) # Replicated aNowGrid for each income shock
-    PermShkVals_rep = np.tile(np.reshape(PermShkVals,(1,ShockCount)),(StateCount,1)) # Replicated permanent shock values for each a_t state
-    TranShkVals_rep = np.tile(np.reshape(TranShkVals,(1,ShockCount)),(StateCount,1)) # Replicated transitory shock values for each a_t state
-    IncomeProbs_rep = np.tile(np.reshape(IncomeProbs,(1,ShockCount)),(StateCount,1)) # Replicated shock probabilities for each a_t state
-    
-    # Find optimal consumption and the endogenous m_t gridpoint for all a_t values
-    Reff_array = Rfree/(PermGroFac*PermShkVals_rep) # Effective interest factor on *normalized* end-of-period assets
-    mNext = Reff_array*aNowGrid_rep + TranShkVals_rep # Next period's market resources
-    vPnext = vPfunc_next(mNext)*PermShkVals_rep**(-CRRA) # Next period's marginal value
-    EndOfPeriodvP = DiscFac*Rfree*PermGroFac**(-CRRA)*np.sum(vPnext*IncomeProbs_rep,axis=1) # Marginal value of end-of-period assets
-    cNowArray = uPinv(EndOfPeriodvP) # Invert the first order condition to find how much we must have *just consumed*
-    mNowArray = aNowGrid + cNowArray # Find beginning of period market resources using end-of-period assets and consumption
-
-    # Construct consumption and marginal value functions for this period
-    cFuncNow = LinearInterp(np.insert(mNowArray,0,0.0),np.insert(cNowArray,0,0.0))
-    vPfuncNow = lambda m : uP(cFuncNow(m)) # Use envelope condition to define marginal value
-    
-    # Make a solution object for this period and return it
-    solution_now = ToddlerConsumerSolution(cFunc=cFuncNow,vPfunc=vPfuncNow)
-    return solution_now
-    
     
 class BabyConsumerType(AgentType):
     '''
@@ -478,14 +400,8 @@ class BabyConsumerType(AgentType):
         '''
         Store the components of the solution as attributes of self for convenience.
         '''
-        self.Cfunc = [self.solution[t].Cfunc for t in range(len(self.solution))]
-        self.add_to_time_vary('Cfunc')
-        if hasattr(self.solution[0],'Vfunc') and hasattr(self.solution[-1],'Vfunc'):
-            self.Vfunc = [self.solution[t].Vfunc for t in range(len(self.solution))]
-            self.add_to_time_vary('Vfunc')
-        if hasattr(self.solution[0],'VpFunc') and hasattr(self.solution[-1],'VpFunc'):
-            self.VpFunc = [self.solution[t].VpFunc for t in range(len(self.solution))]
-            self.add_to_time_vary('VpFunc')
+        self.unpack('Cfunc')
+        
         
     def makeStateGrid(self):
         '''
@@ -505,8 +421,8 @@ class BabyConsumerType(AgentType):
         Uses primitive parameters to construct the attribute IncomeDstn.
         '''
         IncomeDstn = MeanOneLogNormal(sigma=self.IncomeStd) # Standard deviation of underlying normal distribution
-        IncomeDstnApprox = IncomeDstn.approx(self.ShkCount) # Discrete approximation with given number of points
-        IncomeDstnApprox.X *= self.IncomeMean # Shift income values by constant factor
+        IncomeDstnApprox = IncomeDstn.discretize(self.ShkCount) # Discrete approximation with given number of points
+        IncomeDstnApprox.atoms[0] *= self.IncomeMean # Shift income values by constant factor
         self.IncomeDstn = IncomeDstnApprox
         self.add_to_time_inv('IncomeDstn')
         
@@ -516,62 +432,13 @@ class BabyConsumerType(AgentType):
         consume all available resources.
         '''
         Cfunc_terminal = lambda M : M
-        Vfunc_terminal = lambda M : CRRAutility(M,gam=self.CRRA)
-        VpFunc_terminal = lambda M : CRRAutilityP(M,gam=self.CRRA)
+        Vfunc_terminal = lambda M : CRRAutility(M,self.CRRA)
+        VpFunc_terminal = lambda M : CRRAutilityP(M,self.CRRA)
         self.solution_terminal = BabyConsumerSolution(Cfunc=Cfunc_terminal,
                                                       Vfunc=Vfunc_terminal,
                                                       VpFunc=VpFunc_terminal)
         
         
-class ToddlerConsumerType(BabyConsumerType):
-    '''
-    A class for representing an ex ante homogeneous type of consumer in the "toddler
-    consumption-saving" model.  These consumers have CRRA utility over current
-    consumption and discount future utility exponentially.  Their future income
-    is subject to transitory  and permanent shocks, and they can earn gross interest
-    on retained assets at a risk free interest factor.  The solution is represented
-    in a normalized way, with all variables divided by permanent income (raised to
-    the appropriate power).  This model is homothetic in permanent income.
-    '''
-    def __init__(self,**kwds):
-        AgentType.__init__(self,**kwds)
-        self.time_vary = []
-        self.time_inv = ['DiscFac','Rfree','PermGroFac','CRRA','IncomeDstn','StateGrid']
-        self.pseudo_terminal = False
-        self.solve_one_period = solveToddlerCSbyEndogenousGrid
- 
-    def makeIncomeDstn(self):
-        '''
-        Uses primitive parameters to construct the attribute IncomeDstn.
-        '''
-        TranShkDstn = MeanOneLogNormal(sigma=self.TranShkStd).approx(self.TranShkCount) # N point approximation to mean one lognormal
-        PermShkDstn = MeanOneLogNormal(sigma=self.PermShkStd).approx(self.PermShkCount) # N point approximation to mean one lognormal
-        self.IncomeDstn = combine_indep_dstns(PermShkDstn,TranShkDstn)# Cross the permanent and transitory distributions
-        
-    def solveTerminal(self):
-        '''
-        Solves the terminal period problem, in which the agent will simply
-        consume all available resources.  This version simply repacks the
-        terminal solution from the baby CS model method.
-        '''
-        BabyConsumerType.solveTerminal(self)
-        temp_soln = self.solution_terminal
-        self.solution_terminal = ToddlerConsumerSolution(cFunc = temp_soln.Cfunc,
-                                                         vFunc = temp_soln.Vfunc,
-                                                         vPfunc = temp_soln.VpFunc)
-        
-    def post_solve(self):
-        '''
-        Store the components of the solution as attributes of self for convenience.
-        '''
-        self.cFunc = [self.solution[t].cFunc for t in range(len(self.solution))]
-        self.add_to_time_vary('cFunc')
-        if hasattr(self.solution[0],'vFunc') and hasattr(self.solution[-1],'vFunc'):
-            self.vFunc = [self.solution[t].vFunc for t in range(len(self.solution))]
-            self.add_to_time_vary('vFunc')
-        if hasattr(self.solution[0],'vPfunc') and hasattr(self.solution[-1],'vPfunc'):
-            self.vPfunc = [self.solution[t].vPfunc for t in range(len(self.solution))]
-            self.add_to_time_vary('vPfunc')
 
 
 if __name__ == '__main__':
@@ -589,60 +456,29 @@ if __name__ == '__main__':
                   'IncomeStd' : 0.2,
                   'IncomeMean' : 1.0,
                   }
+
+    # Make an example baby type
+    BabyType = BabyConsumerType(**baby_dict)
+    BabyType.cycles = 1 # How many times does the non-terminal period occur? 0 --> infinity
     
-    toddler_dict =  {'DiscFac' : 0.95,
-                     'Rfree' : 1.03,
-                     'PermGroFac' : 1.02,
-                     'CRRA' : 2.0,
-                     'StateMin' : 0.001,
-                     'StateMax' : 20.0,
-                     'StateCount' : 50,
-                     'PermShkCount' : 9,
-                     'TranShkCount' : 9,
-                     'PermShkStd' : 0.1,
-                     'TranShkStd' : 0.1,
-                     'ExponentialGrid' : True
-                     }
+    # Change the solution method
+    #BabyType.solve_one_period = solveBabyCSbyMaximization
+    #BabyType.solve_one_period = solveBabyCSbyFirstOrderCondition
+    #BabyType.solve_one_period = solveBabyCSbyEndogenousGrid
+    #BabyType.solve_one_period = solveBabyCSplusVfunc
+    #BabyType.solve_one_period = solveBabyCSbyEndogenousGridFAST
     
-    do_baby = True
-    if do_baby:
-        # Make an example baby type
-        BabyType = BabyConsumerType(**baby_dict)
-        BabyType.cycles = 0 # How many times does the non-terminal period occur? 0 --> infinity
-        
-        # Change the solution method
-        #BabyType.solve_one_period = solveBabyCSbyMaximization
-        #BabyType.solve_one_period = solveBabyCSbyFirstOrderCondition
-        #BabyType.solve_one_period = solveBabyCSbyEndogenousGrid
-        BabyType.solve_one_period = solveBabyCSplusVfunc
-        #BabyType.solve_one_period = solveBabyCSbyEndogenousGridFAST
-        
-        # Solve the example baby type
-        t_start = time()
-        BabyType.solve(False)
-        t_end = time()
-        print('Solving the baby consumption-saving model took ' + str(t_end-t_start) + ' seconds.')
-        
-        # Plot the consumption function in the first period
-        print('Consumption function in the first period:')
-        plot_funcs(BabyType.Cfunc[0],0.0,10.0)
-        
-        # Plot the value function (if it exists) in the first period of the "baby" model
-        if hasattr(BabyType.solution[0],'Vfunc'):
-            print('Value function in first period:')
-            plot_funcs(BabyType.solution[0].Vfunc,0.1,10.)
-            
-            
-    do_toddler = False
-    if do_toddler:
-        # Make and solve an example toddler type
-        ToddlerType = ToddlerConsumerType(**toddler_dict)
-        ToddlerType.cycles = 0
-        t_start = time()
-        ToddlerType.solve()
-        t_end = time()
-        print('Solving the toddler consumption-saving model took ' + str(t_end-t_start) + ' seconds.')
-        
-        # Plot the consumption function in the first period of the "toddler" model
-        print('Consumption function in the first period:')
-        plot_funcs(ToddlerType.cFunc[0],0.1,10.0)
+    # Solve the example baby type
+    t_start = time()
+    BabyType.solve(False)
+    t_end = time()
+    print('Solving the baby consumption-saving model took ' + str(t_end-t_start) + ' seconds.')
+    
+    # Plot the consumption function in the first period
+    print('Consumption function in the first period:')
+    plot_funcs(BabyType.Cfunc[0],0.0,10.0)
+    
+    # Plot the value function (if it exists) in the first period of the "baby" model
+    if hasattr(BabyType.solution[0],'Vfunc'):
+        print('Value function in first period:')
+        plot_funcs(BabyType.solution[0].Vfunc,0.1,10.)
