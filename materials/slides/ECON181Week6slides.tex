@@ -427,5 +427,76 @@ V'_t(M_t) &= U'(C_t).
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Method 3: Endogenous Grid Method}
+
+\begin{itemize}
+	\item Both prior methods involved \textbf{searching} for a solution at each gridpoint
+	
+	\item Make several ``guesses'' for optimal $C_t$ at each $M_t$, compute expectations for each
+	
+	\item ``I have this amount of $M_t$, how much much should I consume in $C_t$?''
+	
+	\item That's a lot of ``wasted'' computation!
+	
+	\item EGM: Start at the end of the period with exogenous grid of $A_t$ values
+	
+	\item Compute end-of-period marginal value of assets: with a tiny bit more $A_t$, how much more value do we expect to have in the future?
+	
+	\item Invert the FOC: what value of $C_t$ must the agent have \textit{just consumed} if ending the period at this $A_t$ was the optimal choice?
+	
+	\item If you know $A_t$ and $C_t$, then you also know $M_t$!
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rewriting the Problem for EGM}
+
+\begin{align*}
+V_t(M_t) &= \max_{C_t} ~ \left\{ U(C_t) + \beta \E_t V_{t+1}(M_{t+1}) \right\} ~~\text{s.t.} \\
+U(C_t) &= \frac{C_t^{1-\rho}}{1-\rho}, \\
+C_t &\leq M_t, \\
+M_{t+1} &= \mathsf{R} (M_t - C_t) + Y_{t+1}, \\
+Y_{t+1} &\sim F.
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rewriting the Problem for EGM}
+
+\begin{align*}
+V_t(M_t) &= \max_{C_t \leq M_t} ~ \left\{ \frac{C_t^{1-\rho}}{1-\rho} + \beta \E_t V_{t+1}(\mathsf{R} \underbrace{(M_t - C_t)}_{=A_t} + Y_{t+1}) \right\} ~~\text{s.t.}~~  Y_{t+1} \sim F.
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rewriting the Problem for EGM}
+
+\begin{align*}
+V_t(M_t) &= \max_{C_t \leq M_t} ~ \left\{ \frac{C_t^{1-\rho}}{1-\rho} + \beta \E_t V_{t+1}(\mathsf{R} A_t + Y_{t+1}) \right\} ~~\text{s.t.}~~  Y_{t+1} \sim F. \\
+\mathfrak{V}_t(A_t) &\equiv \beta \E_t V_{t+1}(\mathsf{R} A_t + Y_{t+1}), \\
+\mathfrak{V}'_t(A_t) &= \beta \mathsf{R} \E_t V'_{t+1}(\mathsf{R} A_t + Y_{t+1}).
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rewriting the Problem for EGM}
+
+\begin{align*}
+V_t(M_t) &= \max_{C_t \leq M_t} ~ \left\{ \frac{C_t^{1-\rho}}{1-\rho} + \mathfrak{V}_t(A_t) \right\} ~~\text{s.t.}~~  A_t = M_t - C_t. \\
+\text{FOC:}~~ & C_t^{-\rho} - \mathfrak{V}'_t(A_t) = 0. \\
+\text{soln:}~~ & C_t = \mathfrak{V}'_t(A_t)^{-1/\rho},  \qquad M_t = A_t + C_t. \\
+\end{align*}
+
+\end{frame}
+
+
 
 \end{document}
