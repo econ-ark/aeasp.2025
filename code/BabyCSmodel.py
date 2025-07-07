@@ -154,9 +154,9 @@ def solveBabyCSbyFirstOrderCondition(solution_next,DiscFac,Rfree,CRRA,IncomeDstn
     '''
     # Unpack next period's solution and the income distribution, and define the marginal utilty function
     VpFunc_next = solution_next.VpFunc
-    IncomeProbs = IncomeDstn.pmf
-    IncomeVals  = IncomeDstn.X
-    uP = lambda C : CRRAutilityP(C,gam=CRRA)
+    IncomeProbs = IncomeDstn.pmv
+    IncomeVals  = IncomeDstn.atoms[0]
+    uP = lambda C : CRRAutilityP(C,CRRA)
     
     EvalCount = 0
     
@@ -227,10 +227,10 @@ def solveBabyCSbyEndogenousGrid(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,Stat
     '''
     # Unpack next period's solution and the income distribution, and define the (inverse) marginal utilty function
     VpFunc_next = solution_next.VpFunc
-    IncomeProbs = IncomeDstn.pmf
-    IncomeVals  = IncomeDstn.X
-    uP = lambda C : CRRAutilityP(C,gam=CRRA)
-    uPinv = lambda C : CRRAutilityP_inv(C,gam=CRRA)
+    IncomeProbs = IncomeDstn.pmv
+    IncomeVals  = IncomeDstn.atoms[0]
+    uP = lambda C : CRRAutilityP(C,CRRA)
+    uPinv = lambda C : CRRAutilityP_inv(C,CRRA)
     
     EvalCount = 0 # Count the number of numeric integrations we need to perform
     
@@ -370,7 +370,6 @@ def solveBabyCSplusVfunc(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
     return solution_now
 
 
-    
 class BabyConsumerType(AgentType):
     '''
     A class for representing an ex ante homogeneous type of consumer in the "baby
@@ -435,12 +434,8 @@ class BabyConsumerType(AgentType):
         Vfunc_terminal = lambda M : CRRAutility(M,self.CRRA)
         VpFunc_terminal = lambda M : CRRAutilityP(M,self.CRRA)
         self.solution_terminal = BabyConsumerSolution(Cfunc=Cfunc_terminal,
-                                                      Vfunc=Vfunc_terminal,
+                                                Vfunc=Vfunc_terminal,
                                                       VpFunc=VpFunc_terminal)
-        
-        
-
-
 if __name__ == '__main__':
     from time import time
     
@@ -459,12 +454,12 @@ if __name__ == '__main__':
 
     # Make an example baby type
     BabyType = BabyConsumerType(**baby_dict)
-    BabyType.cycles = 1 # How many times does the non-terminal period occur? 0 --> infinity
+    BabyType.cycles = 0 # How many times does the non-terminal period occur? 0 --> infinity
     
     # Change the solution method
     #BabyType.solve_one_period = solveBabyCSbyMaximization
     #BabyType.solve_one_period = solveBabyCSbyFirstOrderCondition
-    #BabyType.solve_one_period = solveBabyCSbyEndogenousGrid
+    BabyType.solve_one_period = solveBabyCSbyEndogenousGrid
     #BabyType.solve_one_period = solveBabyCSplusVfunc
     #BabyType.solve_one_period = solveBabyCSbyEndogenousGridFAST
     
