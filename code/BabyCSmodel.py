@@ -41,8 +41,8 @@ class BabyValueFunction(MetricObject):
     def __init__(self, VnvrsFunc, CRRA):
         self.VnvrsFunc = VnvrsFunc
         self.CRRA = CRRA
-        self.u = lambda x : CRRAutility(x, gam=self.CRRA)
-        self.uP = lambda x : CRRAutilityP(x, gam=self.CRRA)
+        self.u = lambda x : CRRAutility(x, self.CRRA)
+        self.uP = lambda x : CRRAutilityP(x, self.CRRA)
         
     def __call__(self,M):
         return self.u(self.VnvrsFunc(M))
@@ -262,6 +262,65 @@ def solveBabyCSbyEndogenousGrid(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,Stat
     return solution_now
 
 
+def solveBabyCSbyEndogenousGridFAST(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
+    '''
+    Solves one period of the "baby consumption-saving" model by using the endogenous
+    grid method to invert the first order condition, obviating any search. This version
+    uses vectorized operations to avoid the loop over state space points.
+    
+    Parameters
+    ----------
+    solution_next : BabyConsumerSolution
+        The solution to the next period's problem; should have the attributes
+        VpFunc and Cfunc, representing the marginal value and consumption functions.
+    DiscFac : float
+        Intertemporal discount factor.
+    Rfree : float
+        Risk free interest rate on assets retained at the end of the period.
+    CRRA : float
+        Coefficient of relative risk aversion.
+    IncomeDstn : DiscreteDistribution
+        Distribution of income received next period.  Has attributes pmf and X.
+    StateGrid : np.array
+        Array of states at which the consumption-saving problem will be solved.
+        Represents values of A_t or end-of-period assets.
+        
+    Returns
+    -------
+    solution_now : BabyConsumerSolution
+        The solution to this period's problem.
+    '''
+    # Unpack next period's solution and the income distribution, and define the (inverse) marginal utilty function
+    VpFunc_next = solution_next.VpFunc
+    IncomeProbs = IncomeDstn.pmv
+    IncomeVals  = IncomeDstn.atoms[0]
+    uP = lambda C : CRRAutilityP(C,CRRA)
+    uPinv = lambda C : CRRAutilityP_inv(C,CRRA)
+    N = StateGrid.size + 1  # Number of asset gridspoints
+    K = IncomeVals.size  # Number of income nodes
+    
+    # Make a grid of next period's market resource realizations
+    Anow = np.reshape(np.insert(StateGrid,0,0.0), (N,1))  # Add a point at A_t = 0.
+    Ynext = np.reshape(IncomeVals, (1,K))  # Put shocks in the second dimension index
+    Mnext = Rfree * Anow + Ynext  # (N,1) + (1,K) casts to (N,K)
+    
+    # Compute expected end-of-period marginal value
+    VpNext = VpFunc_next(Mnext) # Next period's marginal value
+    EndOfPeriodVp = DiscFac*Rfree*np.dot(VpNext, np.reshape(IncomeProbs, (K,1))) 
+    
+    # Find optimal consumption and the endogenous gridpoints
+    Cnow = uPinv(EndOfPeriodVp) # Invert the first order condition to find how much we must have *just consumed*
+    Mnow = Anow + Cnow # Find beginning of period market resources using end-of-period assets and consumption
+    
+    # Construct consumption and marginal value functions for this period
+    CfuncNow = LinearInterp(np.insert(Mnow,0,0.0),np.insert(Cnow,0,0.0))
+    VpFuncNow = lambda M : uP(CfuncNow(M)) # Use envelope condition to define marginal value
+    
+    # Make a solution object for this period and return it
+    solution_now = BabyConsumerSolution(Cfunc=CfuncNow,VpFunc=VpFuncNow)
+    return solution_now
+
+
 def solveBabyCSplusVfunc(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
     '''
     Solves one period of the "baby consumption-saving" model by using the endogenous
@@ -292,13 +351,13 @@ def solveBabyCSplusVfunc(solution_next,DiscFac,Rfree,CRRA,IncomeDstn,StateGrid):
     # Unpack next period's solution and the income distribution, and define the (inverse) marginal utilty function
     Vfunc_next = solution_next.Vfunc
     VpFunc_next = solution_next.VpFunc
-    IncomeProbs = IncomeDstn.pmf
-    IncomeVals  = IncomeDstn.X
-    u = lambda C : CRRAutility(C,gam=CRRA)
-    uinv = lambda u : CRRAutility_inv(u,gam=CRRA)
-    uinvP = lambda u : CRRAutility_invP(u,gam=CRRA)
-    uP = lambda C : CRRAutilityP(C,gam=CRRA)
-    uPinv = lambda C : CRRAutilityP_inv(C,gam=CRRA)
+    IncomeProbs = IncomeDstn.pmv
+    IncomeVals  = IncomeDstn.atoms[0]
+    u = lambda C : CRRAutility(C,CRRA)
+    uinv = lambda u : CRRAutility_inv(u,CRRA)
+    uinvP = lambda u : CRRAutility_invP(u,CRRA)
+    uP = lambda C : CRRAutilityP(C,CRRA)
+    uPinv = lambda C : CRRAutilityP_inv(C,CRRA)
     
     EvalCount = 0
     
@@ -467,7 +526,7 @@ if __name__ == '__main__':
     t_start = time()
     BabyType.solve(False)
     t_end = time()
-    print('Solving the baby consumption-saving model took ' + str(t_end-t_start) + ' seconds.')
+    print('Solving the baby consumption-saving model took {:.3f}'.format(t_end-t_start) + ' seconds.')
     
     # Plot the consumption function in the first period
     print('Consumption function in the first period:')
