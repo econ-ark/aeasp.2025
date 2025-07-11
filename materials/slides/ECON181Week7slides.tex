@@ -1,0 +1,231 @@
+% !TeX spellcheck = en_GB
+       \documentclass[aspectratio=169]{beamer}
+%	\usetheme{warsaw}
+            \usepackage{setspace}
+            \usepackage{graphicx} %draft option suppresses graphics dvi display
+            \newcommand{\Prob}{\operatorname{Prob}}
+            \clubpenalty 5000
+            \widowpenalty 5000
+            \renewcommand{\baselinestretch}{1.23}
+            \usepackage{amsmath}
+            \usepackage{amsthm}
+            \usepackage{amsfonts}
+            \usepackage{amssymb}
+            \usepackage{bbm}
+            \usepackage{cancel}
+            \usepackage{soul}
+	 \newcommand{\E}{\mathbb{E}}
+	 \newcommand{\R}{\mathbb{R}}
+	 \newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+	 \newcommand{\der}[2]{\frac{\text{d}#1}{\text{d}#2}}
+	\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+	\newcommand{\Die}{\mathsf{D}}
+	\newcommand{\Live}{\cancel{\Die}}
+
+\author{Matthew N. White}
+
+\title[add]{ECOG 315 / ECON 181, Summer 2025 \\ Advanced Research Methods and Statistical Programming \\ Week 7 Lecture Slides}
+
+\institute[HU]{Howard University}
+
+\date{July 11, 2025}
+
+\begin{document}
+
+% ========== Title slide =================
+\begin{frame}
+\maketitle
+\end{frame}
+
+
+% === Today's agenda ======
+
+\begin{frame}
+\frametitle{Today's Agenda}
+\begin{enumerate}	
+	\item Structural modeling: what's so difficult about that?
+	
+	\item Comments on project management and research collaboration
+	
+	\item Advice for your final presentations
+	
+	\item Questions / discussion / feedback on student projects
+\end{enumerate}
+\end{frame}
+
+% === Features that make models hard ======
+
+\begin{frame}
+\frametitle{What Makes MicroDSOPs ``Difficult''?}
+\begin{itemize}
+	\item Additional state and control dimensions: \textbf{curse of dimensionality}
+	
+	\item <2->FOCs necessary but not sufficient to characterize solution
+	
+	\item <2->Mixture of discrete and continuous control variables
+	
+	\item <3->``Bad boundary behavior'': infinities at lower bound, difficult extrapolation
+	
+	\item <4->\textit{Ex ante} heterogeneity: agents don't all have same parameters
+	
+	\item <5->Debugging: complex objects, hard to find where bug starts; need to know theory
+	
+	\item <6->Approximation: how close is close enough?
+	
+	\item <6->Simulation: necessary Monte Carlo population can be large
+	
+	\item <7->``Macro'' layer: things determined in equilibrium from micro model
+\end{itemize}
+\end{frame}
+
+
+% === How to do structural economics ======
+
+\begin{frame}
+\frametitle{What Goes into a Structural Economics Project? (1/2)}
+\begin{enumerate}
+	\item Identify a topic area and question(s) of interest
+	
+	\item Justify why this calls for a structural model (rather than reduced form)
+	
+	\item <2->Design the model, maybe by adapting / expanding prior model
+	
+	\item <2->Characterize model solution on paper, understand theory \& mechanisms
+	
+	\item <3->Program the microeconomic solver: parameters $\longrightarrow$ solution
+	
+	\item <3->Program the microeconomic simulation: solution $\longrightarrow$ outcomes
+	
+	\item <4->Determine which parameters can be set or calibrated without using the model
+	
+	\item <4->Gather \& process data for reduced form sub-estimations for some of those
+	
+	\item <5->Devise a \textbf{structural identification strategy} for remaining parameters
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What Goes into a Structural Economics Project? (2/2)}
+\begin{enumerate}
+	\setcounter{enumi}{9}
+	\item Gather and process data needed for structural estimation
+	
+	\item Program the objective function (MLE, SMM, etc): outcomes $\longrightarrow$ model fit
+	
+	\item <2->Estimate structural parameters by optimizing objective function
+	
+	\item <2->Compute standard errors by appropriate method; is model well identified?
+	
+	\item <3->Evaluate (and demonstrate) fitness of model to data; does it actually work?
+	
+	\item <4->Devise interesting counterfactual experiments and other analysis to use the model
+	
+	\item <5->Program and execute those experiments and analyses
+	
+	\item <5->Interpret and explain those results: how and why did the model behave like that?
+	
+	\item <6->Figure out how to coherently explain all of this in a 25-90 min presentation
+\end{enumerate}
+\end{frame}
+
+
+% === Advice on coauthoring and collaboration ======
+
+\begin{frame}
+\frametitle{So You're Going to Coauthor a Paper (1/2)}
+\begin{itemize}
+	\item Determine whether this needs to be coauthored; why can't it be done solo?
+	
+	\item <2->Make a concrete research plan and outline for the entire project; include dates
+	
+	\item <2->Decide who will do what, and when they will do it; do they have time for that?
+	
+	\item <3->Begin project organization \textbf{immediately}, don't procrastinate on it
+	
+	\item <3->All files should be in a single place (with subdirectories) and \textbf{backed up}
+	
+	\item <4->Have (semi-)regularly scheduled meetings on project progress; stay accountable
+	
+	\item <4->Maybe: open a GitHub issue for your current project task(s) for visibility
+	
+	\item <5->Be descriptive in git commit names and comments; not ``edited document''
+	
+	\item <5->Put comments on \textbf{everything}; I promise you will not remember later
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{So You're Going to Coauthor a Paper (2/2)}
+\begin{itemize}
+	\item Be explicit and clear in comments; don't be lazy. Put a docstring on everything
+	
+	\item <2->Discuss what journal(s) you think this paper might realistically get into
+	
+	\item <2->Communicate about problems as they come up, don't let resentments build
+	
+	\item <3->Establish criteria / procedures early about whether / how to add new coauthor
+	
+	\item <4->Live coding the same file? Unnecessary; see ``two idiots one keyboard''
+	
+	\item <4->Live \textbf{text} collaboration on HackMD, Quip, or Google Docs is fine
+	
+	\item <5->Code / automate almost everything, e.g. reduced form results as model input
+	
+	\item <6->For big projects: use automated tested / continuous integration
+	
+	\item <6->For big projects: clear expectations and procedures for handling PRs
+\end{itemize}
+\end{frame}
+
+% === Advice for final presentation ======
+
+\begin{frame}
+\frametitle{Giving Your Research Presentation (1/2)}
+\begin{itemize}
+	\item The audience doesn't necessarily remember anything; start fresh
+	
+	\item Your time budget is \textbf{even tighter} than before; keep it moving
+	
+	\item <2->Most of my recommended order from research pitch advice holds here
+	
+	\item <2->Say the topic, give \textbf{necessary} background, clearly state the question
+	
+	\item <3->Probably not time for more than minimal literature review: 1-2 papers
+	
+	\item <3->No speculation or dithering: what's the data, what's the econometric strategy?
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Giving Your Research Presentation (2/2)}
+\begin{itemize}
+	\item Show results on \textbf{clean} tables: no vertical lines, 3 digits, include (s.e.), highlight?
+	
+	\item Figures: 1 per slide (2 rarely), label axes and plots, big font, aesthetics matter
+	
+	\item <2->Interpretation: don't just give numeric results, unpack into sentence about reality
+	
+	\item <2->Economic ``register'' loop: reality $\rightarrow$ theory $\rightarrow$ econometrics $\rightarrow$ reality
+	
+	\item <3->Quick conclusion to wrap up; \textbf{maybe} time to say what you'd do next
+	
+	\item <3->It's polite to introduce yourselves and mention mentors (if they helped)
+\end{itemize}
+\end{frame}
+
+
+% === Question session ======
+
+\begin{frame}
+\frametitle{Student Research Questions and Discussion}
+
+Let's talk!
+
+\end{frame}
+
+
+\end{document}
