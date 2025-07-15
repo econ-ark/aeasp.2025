@@ -21,7 +21,7 @@ of your fork of the course repository.
 5) Issue a pull request back to the main fork of the course repository.
 
 0 - I have not yet provided an answer, but I am excited to do so promptly
-1 - I have never heard of this thing.
+1 - I have never heard of this thing
 2 - I have heard of this thing, but don't know what it does
 3 - I know what this thing generally does, but have never used it
 4 - I have briefly used this thing, but didn't do much with it
@@ -35,25 +35,25 @@ of your fork of the course repository.
 
 THING : VALUE
 
-C / C++ : 4
-ChatGPT: 8
-Claude : 4
-Economics : 7
-Fortran : 4
-git : 5
-GitHub : 5
-Grok : 3
-Julia : 3
-Jupyter : 4
-LaTeX : 7
-Litmaps: 1
-Markdown : 7
-Matlab : 6
-Overleaf: 8
-PaperPile : 1
-Python : 5
-R : 8
-SAS : 3
-Stata : 5
-The Simpsons : 2
-Zenodo : 1
+C / C++ : 0
+ChatGPT: 0
+Claude : 0
+Economics : 0
+Fortran : 0
+git : 0
+GitHub : 0
+Grok : 0
+Julia : 0
+Jupyter : 0
+LaTeX : 0
+Litmaps: 0
+Markdown : 0
+Matlab : 0
+Overleaf: 0
+PaperPile : 0
+Python : 0
+R : 0
+SAS : 0
+Stata : 0
+The Simpsons : 0
+Zenodo : 0
