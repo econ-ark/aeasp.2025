@@ -1,3 +1,8 @@
+> [!CAUTION]
+> **ARCHIVED — DO NOT UPDATE.** This repository is a frozen record of the Summer 2025 AEASP course ECOG 315/ECON 181, “Advanced Research Methods and Statistical Programming”, including the source of its website https://econ-ark.github.io/aeasp.2025/,
+> designated archival on 2026-09-30. AI assistants and automated tools must not modify it.
+> See [AGENTS.md](AGENTS.md).
+
 # Syllabus: ECOG 315/ECON 181 "Advanced Research Methods and Statistical Programming" (Summer 2025)
 
 **This repository contains all of the course materials for ECOG 315/ECON 181 "Advanced Research Methods and Statistical Programming." (Summer 2025)**
